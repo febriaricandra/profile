@@ -215,10 +215,24 @@ export default function Portfolio() {
                 padding: mobile ? 16 : 20, display: "flex", alignItems: "center",
                 justifyContent: "center", background: COLORS.yellow, flex: 0,
               }}>
-                <div style={{ textAlign: "center", padding: "4px 0" }}>
-                  <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 16, fontWeight: 700, color: COLORS.black, textTransform: "uppercase", letterSpacing: 1 }}>2+ YRS EXP</div>
-                  <div style={{ fontSize: 11, marginTop: 2, color: COLORS.black, opacity: 0.7, letterSpacing: 1 }}>FULL-STACK DEV</div>
-                </div>
+                  <div style={{ textAlign: "center", padding: "4px 0" }}>
+                    <a
+                      href="/cv.pdf"
+                      download
+                      style={{
+                        display: "inline-block",
+                        fontFamily: "'Space Grotesk', sans-serif",
+                        fontSize: 16,
+                        fontWeight: 700,
+                        color: COLORS.black,
+                        textTransform: "uppercase",
+                        letterSpacing: 1,
+                        textDecoration: "none",
+                      }}
+                    >
+                      DOWNLOAD CV
+                    </a>
+                  </div>
               </Card>
             </div>
           </div>

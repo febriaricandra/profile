@@ -396,23 +396,24 @@ export default function App() {
                   flex: 0,
                 }}
               >
-                <div style={{ textAlign: "center", padding: "4px 0" }}>
-                  <div
-                    style={{
-                      fontFamily: "'Space Grotesk', sans-serif",
-                      fontSize: smallMobile ? 12 : 16,
-                      fontWeight: 700,
-                      color: COLORS.black,
-                      textTransform: "uppercase",
-                      letterSpacing: 1,
-                    }}
-                  >
-                    2+ YRS EXP
+                  <div style={{ textAlign: "center", padding: "4px 0" }}>
+                    <a
+                      href="/cv.pdf"
+                      download
+                      style={{
+                        display: "inline-block",
+                        fontFamily: "'Space Grotesk', sans-serif",
+                        fontSize: smallMobile ? 12 : 16,
+                        fontWeight: 700,
+                        color: COLORS.black,
+                        textTransform: "uppercase",
+                        letterSpacing: 1,
+                        textDecoration: "none",
+                      }}
+                    >
+                      DOWNLOAD CV
+                    </a>
                   </div>
-                  <div style={{ fontSize: smallMobile ? 9 : 11, marginTop: 2, color: COLORS.black, opacity: 0.7, letterSpacing: 1 }}>
-                    FULL-STACK DEV
-                  </div>
-                </div>
               </Card>
             </div>
           </div>
