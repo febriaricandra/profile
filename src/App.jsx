@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const COLORS = {
   bg: "#E8E4D9",
@@ -35,11 +35,29 @@ const projects = [
 
 function useWindowWidth() {
   const [w, setW] = useState(typeof window !== "undefined" ? window.innerWidth : 1200);
+  
   useEffect(() => {
-    const h = () => setW(window.innerWidth);
-    window.addEventListener("resize", h);
-    return () => window.removeEventListener("resize", h);
+    const handleResize = () => {
+      setW(window.innerWidth);
+    };
+    
+    // Set initial width immediately on mount
+    handleResize();
+    
+    // Add event listener with some debounce
+    let timeoutId;
+    const debouncedResize = () => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(handleResize, 100);
+    };
+    
+    window.addEventListener("resize", debouncedResize);
+    return () => {
+      window.removeEventListener("resize", debouncedResize);
+      clearTimeout(timeoutId);
+    };
   }, []);
+  
   return w;
 }
 
@@ -149,22 +167,38 @@ export default function App() {
   const w = useWindowWidth();
   const mobile = w < 700;
   const tablet = w >= 700 && w < 1024;
+  
+  const animationFrameRef = useRef(null);
+  const cursorStateRef = useRef({ x: 0, y: 0, active: false });
 
   useEffect(() => {
     setTimeout(() => setLoaded(true), 100);
   }, []);
 
   useEffect(() => {
+    // Skip cursor tracking on mobile
+    if (mobile) return;
+    
     const move = (e) => {
-      setCursor({ x: e.clientX, y: e.clientY });
-      const target = e.target;
-      const isInteractive = target.closest && target.closest("a, button, [role='button'], [tabindex='0'], [data-brutal-interactive='true']");
-      setCursorActive(Boolean(isInteractive));
+      cursorStateRef.current = {
+        x: e.clientX,
+        y: e.clientY,
+        active: Boolean(e.target.closest && e.target.closest("a, button, [role='button'], [tabindex='0'], [data-brutal-interactive='true']"))
+      };
+      
+      if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
+      animationFrameRef.current = requestAnimationFrame(() => {
+        setCursor({ x: cursorStateRef.current.x, y: cursorStateRef.current.y });
+        setCursorActive(cursorStateRef.current.active);
+      });
     };
 
     window.addEventListener("mousemove", move);
-    return () => window.removeEventListener("mousemove", move);
-  }, []);
+    return () => {
+      window.removeEventListener("mousemove", move);
+      if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
+    };
+  }, [mobile]);
 
   const stagger = (i) => ({
     opacity: loaded ? 1 : 0,
@@ -187,39 +221,47 @@ export default function App() {
         ::-webkit-scrollbar-thumb { background: ${COLORS.black}; }
         body { overflow-x: hidden; cursor: none; }
         a, button, input, textarea, select, [role='button'], [tabindex='0'] { cursor: none !important; }
+        @media (max-width: 768px) {
+          a, button, input, textarea, select, [role='button'], [tabindex='0'] { cursor: auto !important; }
+          body { cursor: auto; }
+        }
       `}</style>
 
-      <div
-        style={{
-          position: "fixed",
-          top: cursor.y,
-          left: cursor.x,
-          transform: "translate(-50%, -50%)",
-          width: cursorActive ? 30 : 22,
-          height: cursorActive ? 30 : 22,
-          background: COLORS.white,
-          border: `3px solid ${COLORS.black}`,
-          boxShadow: "4px 4px 0 rgba(0,0,0,0.85)",
-          pointerEvents: "none",
-          zIndex: 10000,
-          borderRadius: 0,
-          transition: "width 0.12s ease, height 0.12s ease, transform 0.12s ease, background 0.12s ease",
-        }}
-      />
+      {!mobile && (
+        <div
+          style={{
+            position: "fixed",
+            top: cursor.y,
+            left: cursor.x,
+            transform: "translate(-50%, -50%)",
+            width: cursorActive ? 30 : 22,
+            height: cursorActive ? 30 : 22,
+            background: COLORS.white,
+            border: `3px solid ${COLORS.black}`,
+            boxShadow: "4px 4px 0 rgba(0,0,0,0.85)",
+            pointerEvents: "none",
+            zIndex: 10000,
+            borderRadius: 0,
+            transition: "width 0.12s ease, height 0.12s ease, transform 0.12s ease, background 0.12s ease",
+          }}
+        />
+      )}
 
-      <div
-        style={{
-          position: "fixed",
-          top: "-50%",
-          left: "-50%",
-          width: "200%",
-          height: "200%",
-          background: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E")`,
-          pointerEvents: "none",
-          zIndex: 999,
-          animation: "grain 8s steps(10) infinite",
-        }}
-      />
+      {!mobile && (
+        <div
+          style={{
+            position: "fixed",
+            top: "-50%",
+            left: "-50%",
+            width: "200%",
+            height: "200%",
+            background: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E")`,
+            pointerEvents: "none",
+            zIndex: 999,
+            animation: "grain 16s steps(5) infinite",
+          }}
+        />
+      )}
 
       <div
         style={{
