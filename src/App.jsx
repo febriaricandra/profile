@@ -107,10 +107,10 @@ function SkillTag({ label, color = COLORS.black }) {
     <span
       style={{
         display: "inline-block",
-        padding: "4px 10px",
+        padding: "clamp(2px, 2vw, 4px) clamp(6px, 3vw, 10px)",
         border: `2px solid ${color}`,
         fontFamily: "'IBM Plex Mono', monospace",
-        fontSize: 11,
+        fontSize: "clamp(9px, 2.5vw, 11px)",
         fontWeight: 700,
         letterSpacing: 0.5,
         textTransform: "uppercase",
@@ -165,6 +165,7 @@ export default function App() {
   const [cursor, setCursor] = useState({ x: 0, y: 0 });
   const [cursorActive, setCursorActive] = useState(false);
   const w = useWindowWidth();
+  const smallMobile = w < 480;
   const mobile = w < 700;
   const tablet = w >= 700 && w < 1024;
   
@@ -267,11 +268,11 @@ export default function App() {
         style={{
           background: COLORS.black,
           color: COLORS.white,
-          padding: mobile ? "8px 0" : "10px 0",
+          padding: smallMobile ? "6px 0" : mobile ? "8px 0" : "10px 0",
           fontFamily: "'IBM Plex Mono', monospace",
-          fontSize: mobile ? 10 : 12,
+          fontSize: smallMobile ? 8 : mobile ? 10 : 12,
           fontWeight: 700,
-          letterSpacing: 2,
+          letterSpacing: smallMobile ? 1 : 2,
           textTransform: "uppercase",
           borderBottom: `3px solid ${COLORS.accent}`,
         }}
@@ -279,8 +280,8 @@ export default function App() {
         <MarqueeText text="★ SOFTWARE ENGINEER ★ FULL-STACK DEVELOPER ★ BACKEND SPECIALIST ★ OPEN FOR OPPORTUNITIES ★" />
       </div>
 
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: mobile ? "16px 12px 48px" : "24px 20px 60px" }}>
-        <div style={{ display: "flex", flexDirection: "column", gap: mobile ? 12 : 16 }}>
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: smallMobile ? "12px 8px 32px" : mobile ? "16px 12px 48px" : "24px 20px 60px" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: smallMobile ? 8 : mobile ? 12 : 16 }}>
           <div
             style={{
               display: "grid",
@@ -291,21 +292,21 @@ export default function App() {
           >
             <Card
               style={{
-                padding: mobile ? 24 : 32,
+                padding: smallMobile ? 16 : mobile ? 24 : 32,
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",
                 background: COLORS.black,
                 color: COLORS.white,
-                minHeight: mobile ? 180 : 200,
+                minHeight: smallMobile ? 140 : mobile ? 180 : 200,
               }}
               hover={false}
             >
               <div>
                 <div
                   style={{
-                    fontSize: 11,
-                    letterSpacing: 3,
+                    fontSize: smallMobile ? 9 : 11,
+                    letterSpacing: smallMobile ? 1 : 3,
                     textTransform: "uppercase",
                     color: COLORS.accent,
                     marginBottom: 8,
@@ -317,7 +318,7 @@ export default function App() {
                 <h1
                   style={{
                     fontFamily: "'Instrument Serif', serif",
-                    fontSize: mobile ? 36 : tablet ? 44 : "clamp(42px, 5vw, 64px)",
+                    fontSize: smallMobile ? 24 : mobile ? 32 : tablet ? 44 : "clamp(42px, 5vw, 64px)",
                     fontWeight: 400,
                     lineHeight: 1.05,
                     color: COLORS.white,
@@ -339,16 +340,16 @@ export default function App() {
                     flexShrink: 0,
                   }}
                 />
-                <span style={{ fontSize: 11, letterSpacing: 1, textTransform: "uppercase", color: COLORS.gray }}>
+                <span style={{ fontSize: smallMobile ? 9 : 11, letterSpacing: 1, textTransform: "uppercase", color: COLORS.gray }}>
                   Available for work
                 </span>
               </div>
             </Card>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: mobile ? 12 : 16 }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: smallMobile ? 8 : mobile ? 12 : 16 }}>
               <Card
                 style={{
-                  padding: mobile ? 18 : 20,
+                  padding: smallMobile ? 12 : mobile ? 18 : 20,
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "center",
@@ -358,8 +359,8 @@ export default function App() {
               >
                 <div
                   style={{
-                    fontSize: 11,
-                    letterSpacing: 2,
+                    fontSize: smallMobile ? 9 : 11,
+                    letterSpacing: smallMobile ? 1 : 2,
                     textTransform: "uppercase",
                     fontWeight: 700,
                     color: COLORS.black,
@@ -372,7 +373,7 @@ export default function App() {
                 <div
                   style={{
                     fontFamily: "'Space Grotesk', sans-serif",
-                    fontSize: mobile ? 20 : 22,
+                    fontSize: smallMobile ? 16 : mobile ? 20 : 22,
                     fontWeight: 700,
                     color: COLORS.black,
                   }}
@@ -385,7 +386,7 @@ export default function App() {
               </Card>
               <Card
                 style={{
-                  padding: mobile ? 16 : 20,
+                  padding: smallMobile ? 12 : mobile ? 16 : 20,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -397,7 +398,7 @@ export default function App() {
                   <div
                     style={{
                       fontFamily: "'Space Grotesk', sans-serif",
-                      fontSize: 16,
+                      fontSize: smallMobile ? 12 : 16,
                       fontWeight: 700,
                       color: COLORS.black,
                       textTransform: "uppercase",
@@ -406,7 +407,7 @@ export default function App() {
                   >
                     2+ YRS EXP
                   </div>
-                  <div style={{ fontSize: 11, marginTop: 2, color: COLORS.black, opacity: 0.7, letterSpacing: 1 }}>
+                  <div style={{ fontSize: smallMobile ? 9 : 11, marginTop: 2, color: COLORS.black, opacity: 0.7, letterSpacing: 1 }}>
                     FULL-STACK DEV
                   </div>
                 </div>
@@ -418,28 +419,28 @@ export default function App() {
             style={{
               display: "grid",
               gridTemplateColumns: mobile ? "1fr" : tablet ? "1fr 1fr" : "1fr 1fr",
-              gap: mobile ? 12 : 16,
+              gap: smallMobile ? 8 : mobile ? 12 : 16,
               ...stagger(2),
             }}
           >
-            <Card style={{ padding: mobile ? 22 : 28 }}>
-              <div style={{ fontSize: 11, letterSpacing: 3, textTransform: "uppercase", fontWeight: 700, color: COLORS.accent, marginBottom: 12 }}>
+            <Card style={{ padding: smallMobile ? 14 : mobile ? 22 : 28 }}>
+              <div style={{ fontSize: smallMobile ? 9 : 11, letterSpacing: smallMobile ? 1 : 3, textTransform: "uppercase", fontWeight: 700, color: COLORS.accent, marginBottom: 12 }}>
                 ABOUT
               </div>
-              <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: mobile ? 14 : 15, lineHeight: 1.7, color: COLORS.black }}>
+              <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: smallMobile ? 12 : mobile ? 14 : 15, lineHeight: 1.7, color: COLORS.black }}>
                 Full-stack engineer with a proven track record building customer-centric systems serving <strong style={{ color: COLORS.accent }}>1,000+ users</strong>. Deep expertise in <strong>PHP/JS/Golang</strong> ecosystem with sharp business acumen in IT consulting infrastructure.
               </p>
-              <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: mobile ? 14 : 15, lineHeight: 1.7, color: COLORS.black, marginTop: 12 }}>
+              <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: smallMobile ? 12 : mobile ? 14 : 15, lineHeight: 1.7, color: COLORS.black, marginTop: 12 }}>
                 Demonstrated ability to drive significant improvements in system performance and security while maintaining mission-critical reliability.
               </p>
             </Card>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: mobile ? 12 : 16 }}>
-              <Card style={{ padding: mobile ? 18 : 20 }}>
-                <div style={{ fontSize: 11, letterSpacing: 3, textTransform: "uppercase", fontWeight: 700, color: COLORS.accent, marginBottom: 12 }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: smallMobile ? 8 : mobile ? 12 : 16 }}>
+              <Card style={{ padding: smallMobile ? 12 : mobile ? 18 : 20 }}>
+                <div style={{ fontSize: smallMobile ? 9 : 11, letterSpacing: smallMobile ? 1 : 3, textTransform: "uppercase", fontWeight: 700, color: COLORS.accent, marginBottom: 12 }}>
                   CONNECT
                 </div>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: smallMobile ? 4 : 8 }}>
                   {[
                     { label: "EMAIL →", href: "mailto:febriaricandraproduction@gmail.com" },
                     { label: "LINKEDIN →", href: "https://linkedin.com/in/febriaricandra-guritno" },
@@ -452,11 +453,11 @@ export default function App() {
                       target="_blank"
                       rel="noopener noreferrer"
                       style={{
-                        padding: "8px 12px",
+                        padding: smallMobile ? "6px 8px" : "8px 12px",
                         border: `2px solid ${COLORS.black}`,
                         background: "transparent",
                         fontFamily: "'IBM Plex Mono', monospace",
-                        fontSize: mobile ? 10 : 11,
+                        fontSize: smallMobile ? 8 : mobile ? 10 : 11,
                         fontWeight: 700,
                         color: COLORS.black,
                         textDecoration: "none",
@@ -478,15 +479,15 @@ export default function App() {
                   ))}
                 </div>
               </Card>
-              <Card style={{ padding: mobile ? 18 : 20, background: COLORS.blue, color: COLORS.white, flex: 1 }}>
-                <div style={{ fontSize: 11, letterSpacing: 3, textTransform: "uppercase", fontWeight: 700, opacity: 0.6, marginBottom: 8 }}>
+              <Card style={{ padding: smallMobile ? 12 : mobile ? 18 : 20, background: COLORS.blue, color: COLORS.white, flex: 1 }}>
+                <div style={{ fontSize: smallMobile ? 9 : 11, letterSpacing: smallMobile ? 1 : 3, textTransform: "uppercase", fontWeight: 700, opacity: 0.6, marginBottom: 8 }}>
                   EDUCATION
                 </div>
-                <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: mobile ? 14 : 16, marginBottom: 4 }}>
+                <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: smallMobile ? 12 : mobile ? 14 : 16, marginBottom: 4 }}>
                   B.Sc Informatics (Computer Science)
                 </div>
-                <div style={{ fontSize: 13, opacity: 0.8 }}>Universitas Teknologi Digital Indonesia</div>
-                <div style={{ display: "flex", justifyContent: "space-between", marginTop: 8, fontSize: 12, opacity: 0.7 }}>
+                <div style={{ fontSize: smallMobile ? 11 : 13, opacity: 0.8 }}>Universitas Teknologi Digital Indonesia</div>
+                <div style={{ display: "flex", justifyContent: "space-between", marginTop: 8, fontSize: smallMobile ? 10 : 12, opacity: 0.7 }}>
                   <span>2019 – 2023</span>
                   <span style={{ fontWeight: 700, color: COLORS.yellow }}>GPA 3.29</span>
                 </div>
@@ -501,13 +502,13 @@ export default function App() {
             style={{
               display: "grid",
               gridTemplateColumns: mobile ? "1fr" : "1fr 1fr 1fr",
-              gap: mobile ? 12 : 16,
+              gap: smallMobile ? 8 : mobile ? 12 : 16,
               ...stagger(5),
             }}
           >
             {skills.map((s, i) => (
-              <Card key={s.cat} style={{ padding: mobile ? 18 : 20 }}>
-                <div style={{ fontSize: 11, letterSpacing: 3, textTransform: "uppercase", fontWeight: 700, color: colorMap[i], marginBottom: 12 }}>
+              <Card key={s.cat} style={{ padding: smallMobile ? 12 : mobile ? 18 : 20 }}>
+                <div style={{ fontSize: smallMobile ? 9 : 11, letterSpacing: smallMobile ? 1 : 3, textTransform: "uppercase", fontWeight: 700, color: colorMap[i], marginBottom: 12 }}>
                   {s.cat}
                 </div>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
@@ -524,13 +525,13 @@ export default function App() {
           </div>
 
           {mobile ? (
-            <div style={{ display: "flex", flexDirection: "column", gap: 12, ...stagger(7) }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: smallMobile ? 8 : 12, ...stagger(7) }}>
               {experiences.map((exp, i) => (
                 <Card key={i} style={{ padding: 0, overflow: "hidden" }} hover={false}>
                   <div
                     onClick={() => setActiveExp(activeExp === i ? -1 : i)}
                     style={{
-                      padding: "16px 18px",
+                      padding: smallMobile ? "12px 12px" : "16px 18px",
                       background: activeExp === i ? exp.color : COLORS.white,
                       color: activeExp === i ? (exp.color === COLORS.yellow ? COLORS.black : COLORS.white) : COLORS.black,
                       cursor: "pointer",
@@ -540,20 +541,20 @@ export default function App() {
                     }}
                   >
                     <div>
-                      <div style={{ fontWeight: 700, fontSize: 13 }}>{exp.role}</div>
-                      <div style={{ fontSize: 11, opacity: 0.7, marginTop: 2 }}>{exp.company}</div>
+                      <div style={{ fontWeight: 700, fontSize: smallMobile ? 11 : 13 }}>{exp.role}</div>
+                      <div style={{ fontSize: smallMobile ? 9 : 11, opacity: 0.7, marginTop: 2 }}>{exp.company}</div>
                     </div>
-                    <span style={{ fontSize: 18, fontWeight: 700, transform: activeExp === i ? "rotate(45deg)" : "rotate(0deg)", transition: "transform 0.2s" }}>+</span>
+                    <span style={{ fontSize: smallMobile ? 14 : 18, fontWeight: 700, transform: activeExp === i ? "rotate(45deg)" : "rotate(0deg)", transition: "transform 0.2s" }}>+</span>
                   </div>
                   {activeExp === i && (
-                    <div style={{ padding: "16px 18px", borderTop: `2px solid ${COLORS.black}` }}>
+                    <div style={{ padding: smallMobile ? "12px 12px" : "16px 18px", borderTop: `2px solid ${COLORS.black}` }}>
                       <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 6, marginBottom: 10 }}>
-                        <span style={{ fontSize: 11, color: COLORS.gray, fontWeight: 700 }}>{exp.period}</span>
+                        <span style={{ fontSize: smallMobile ? 9 : 11, color: COLORS.gray, fontWeight: 700 }}>{exp.period}</span>
                         <span
                           style={{
-                            padding: "3px 8px",
+                            padding: smallMobile ? "2px 6px" : "3px 8px",
                             background: exp.color,
-                            fontSize: 10,
+                            fontSize: smallMobile ? 8 : 10,
                             fontWeight: 700,
                             letterSpacing: 0.5,
                             color: exp.color === COLORS.yellow ? COLORS.black : COLORS.white,
@@ -562,7 +563,7 @@ export default function App() {
                           {exp.location}
                         </span>
                       </div>
-                      <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 13, lineHeight: 1.7, color: COLORS.black, opacity: 0.85 }}>
+                      <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: smallMobile ? 11 : 13, lineHeight: 1.7, color: COLORS.black, opacity: 0.85 }}>
                         {exp.desc}
                       </p>
                     </div>
@@ -644,24 +645,24 @@ export default function App() {
             style={{
               display: "grid",
               gridTemplateColumns: mobile ? "1fr" : tablet ? "1fr 1fr" : "1fr 1fr 1fr",
-              gap: mobile ? 12 : 16,
+              gap: smallMobile ? 8 : mobile ? 12 : 16,
               ...stagger(9),
             }}
           >
             {projects.map((p) => (
               <Card key={p.name} style={{ padding: 0, overflow: "hidden" }} onClick={() => window.open(p.url, "_blank")}>
                 <div style={{ height: 8, background: p.color }} />
-                <div style={{ padding: mobile ? 18 : 20 }}>
-                  <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: mobile ? 16 : 18, fontWeight: 700, color: COLORS.black, marginBottom: 4 }}>
+                <div style={{ padding: smallMobile ? 12 : mobile ? 18 : 20 }}>
+                  <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: smallMobile ? 14 : mobile ? 16 : 18, fontWeight: 700, color: COLORS.black, marginBottom: 4 }}>
                     {p.name}
                   </div>
                   <div
                     style={{
                       display: "inline-block",
-                      padding: "3px 8px",
+                      padding: smallMobile ? "2px 6px" : "3px 8px",
                       background: `${p.color}18`,
                       border: `1.5px solid ${p.color}`,
-                      fontSize: 10,
+                      fontSize: smallMobile ? 8 : 10,
                       fontWeight: 700,
                       letterSpacing: 0.5,
                       color: p.color,
@@ -671,10 +672,10 @@ export default function App() {
                   >
                     {p.tech}
                   </div>
-                  <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 13, lineHeight: 1.6, color: COLORS.black, opacity: 0.8 }}>
+                  <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: smallMobile ? 11 : 13, lineHeight: 1.6, color: COLORS.black, opacity: 0.8 }}>
                     {p.desc}
                   </p>
-                  <div style={{ marginTop: 12, fontSize: 11, fontWeight: 700, color: p.color, letterSpacing: 1 }}>
+                  <div style={{ marginTop: 12, fontSize: smallMobile ? 9 : 11, fontWeight: 700, color: p.color, letterSpacing: 1 }}>
                     VIEW PROJECT →
                   </div>
                 </div>
@@ -685,20 +686,20 @@ export default function App() {
           <div
             style={{
               borderTop: `3px solid ${COLORS.black}`,
-              paddingTop: 20,
+              paddingTop: smallMobile ? 12 : 20,
               marginTop: 8,
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
               flexWrap: "wrap",
-              gap: 12,
+              gap: smallMobile ? 6 : 12,
               ...stagger(10),
             }}
           >
-            <div style={{ fontSize: mobile ? 10 : 12, color: COLORS.black, opacity: 0.5, letterSpacing: 1 }}>
+            <div style={{ fontSize: smallMobile ? 8 : mobile ? 10 : 12, color: COLORS.black, opacity: 0.5, letterSpacing: 1 }}>
               © 2025 FEBRIARI CANDRA GURITNO
             </div>
-            <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: mobile ? 14 : 18, fontStyle: "italic", color: COLORS.black }}>
+            <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: smallMobile ? 12 : mobile ? 14 : 18, fontStyle: "italic", color: COLORS.black }}>
               Built with passion & purpose ✦
             </div>
           </div>
