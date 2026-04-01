@@ -61,10 +61,11 @@ function useWindowWidth() {
   return w;
 }
 
-function MarqueeText({ text, speed = 25 }) {
+function MarqueeText({ text, speed = 25, enabled = true }) {
+  const anim = enabled ? `marquee ${speed}s linear infinite` : "none";
   return (
     <div style={{ overflow: "hidden", whiteSpace: "nowrap", width: "100%" }}>
-      <div style={{ display: "inline-block", animation: `marquee ${speed}s linear infinite` }}>
+      <div style={{ display: "inline-block", animation: anim }}>
         {Array(6)
           .fill(null)
           .map((_, i) => (
@@ -76,6 +77,7 @@ function MarqueeText({ text, speed = 25 }) {
     </div>
   );
 }
+
 
 function Card({ children, style, hover = true, onClick }) {
   const [hovered, setHovered] = useState(false);
@@ -212,7 +214,7 @@ export default function App() {
   return (
     <div style={{ background: COLORS.bg, minHeight: "100vh", fontFamily: "'IBM Plex Mono', monospace" }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap');
+        
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
         @keyframes grain { 0%, 100% { transform: translate(0,0); } 10% { transform: translate(-5%,-10%); } 50% { transform: translate(12%,9%); } 90% { transform: translate(-1%,7%); } }
@@ -277,7 +279,7 @@ export default function App() {
           borderBottom: `3px solid ${COLORS.accent}`,
         }}
       >
-        <MarqueeText text="★ SOFTWARE ENGINEER ★ FULL-STACK DEVELOPER ★ BACKEND SPECIALIST ★ OPEN FOR OPPORTUNITIES ★" />
+        <MarqueeText text="★ SOFTWARE ENGINEER ★ FULL-STACK DEVELOPER ★ BACKEND SPECIALIST ★ OPEN FOR OPPORTUNITIES ★" enabled={!mobile} />
       </div>
 
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: smallMobile ? "12px 8px 32px" : mobile ? "16px 12px 48px" : "24px 20px 60px" }}>

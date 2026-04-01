@@ -43,10 +43,11 @@ function useWindowWidth() {
   return w;
 }
 
-function MarqueeText({ text, speed = 25 }) {
+function MarqueeText({ text, speed = 25, enabled = true }) {
+  const anim = enabled ? `marquee ${speed}s linear infinite` : "none";
   return (
     <div style={{ overflow: "hidden", whiteSpace: "nowrap", width: "100%" }}>
-      <div style={{ display: "inline-block", animation: `marquee ${speed}s linear infinite` }}>
+      <div style={{ display: "inline-block", animation: anim }}>
         {Array(6).fill(null).map((_, i) => (
           <span key={i} style={{ marginRight: 48 }}>{text}</span>
         ))}
@@ -137,7 +138,7 @@ export default function Portfolio() {
   return (
     <div style={{ background: COLORS.bg, minHeight: "100vh", fontFamily: "'IBM Plex Mono', monospace" }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap');
+        
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
         @keyframes grain { 0%, 100% { transform: translate(0,0); } 10% { transform: translate(-5%,-10%); } 50% { transform: translate(12%,9%); } 90% { transform: translate(-1%,7%); } }
@@ -161,7 +162,7 @@ export default function Portfolio() {
         fontFamily: "'IBM Plex Mono', monospace", fontSize: mobile ? 10 : 12, fontWeight: 700,
         letterSpacing: 2, textTransform: "uppercase", borderBottom: `3px solid ${COLORS.accent}`,
       }}>
-        <MarqueeText text="★ SOFTWARE ENGINEER ★ FULL-STACK DEVELOPER ★ BACKEND SPECIALIST ★ OPEN FOR OPPORTUNITIES ★" />
+        <MarqueeText text="★ SOFTWARE ENGINEER ★ FULL-STACK DEVELOPER ★ BACKEND SPECIALIST ★ OPEN FOR OPPORTUNITIES ★" enabled={!mobile} />
       </div>
 
       {/* Container */}
